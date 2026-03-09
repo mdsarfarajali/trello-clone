@@ -5,7 +5,7 @@ import API from '../api';
 import toast from 'react-hot-toast';
 import AppNavbar from '../components/AppNavbar';
 import InlineCalendar from '../components/InlineCalendar';
-import { Kanban, Table2, CalendarDays, LayoutDashboard, Star, MoreVertical, Edit2, Trash2, Clock, CheckCircle2, Circle } from 'lucide-react';
+import { Kanban, Table2, CalendarDays, LayoutDashboard, Star, MoreVertical, Edit2, Trash2 } from 'lucide-react';
 
 const BOARD_BG_COLORS = [
     '#B7B89F', '#B7E5CD', '#8ABEB9', '#8FABD4',
@@ -26,7 +26,7 @@ const GRADIENTS = [
 
 
 export default function DashboardPage() {
-    const { user, logout } = useAuth();
+    const { user } = useAuth();
     const navigate = useNavigate();
     const [boards, setBoards] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -35,9 +35,7 @@ export default function DashboardPage() {
     const [selectedBg, setSelectedBg] = useState(BOARD_BG_COLORS[0]);
     const [bgType, setBgType] = useState('color');
     const [creating, setCreating] = useState(false);
-    const [showProfile, setShowProfile] = useState(false); // kept for compat but unused here
     const [dashView, setDashView] = useState('board'); // 'board' | 'table' | 'calendar' | 'dashboard'
-    const [showViewMenu, setShowViewMenu] = useState(false);
     // tracks when each board was starred (boardId -> timestamp ms)
     const starredAtRef = React.useRef({});
 

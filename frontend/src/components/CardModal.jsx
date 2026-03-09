@@ -269,6 +269,7 @@ export default function CardModal({ card, board, lists, onClose, onUpdate, onDel
                                         rows={1}
                                         style={{ width: '100%', padding: '10px 14px', borderRadius: 'var(--radius)', border: 'none', background: '#fff', boxShadow: 'inset 0 0 0 1px rgba(9,30,66,.15), var(--shadow-sm)', fontSize: 14, outline: 'none', transition: 'box-shadow var(--transition)', resize: 'vertical', minHeight: 40 }}
                                         onFocus={e => e.currentTarget.style.boxShadow = 'inset 0 0 0 2px var(--blue), var(--shadow-sm)'}
+                                        onBlur={e => e.currentTarget.style.boxShadow = 'inset 0 0 0 1px rgba(9,30,66,.15), var(--shadow-sm)'}
                                     />
                                     {newComment && (
                                         <form onSubmit={handleAddComment}>
