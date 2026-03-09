@@ -7,8 +7,10 @@ dist-ssr
 .env
 .env.*
 !.env.example
+!.env.production
 **/.env
 !**/.env.example
+!**/.env.production
 
 # Logs
 logs
