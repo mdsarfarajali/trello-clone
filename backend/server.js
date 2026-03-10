@@ -31,6 +31,7 @@ app.use("/api/auth", require("./routes/auth"));
 app.use("/api/boards", require("./routes/boards"));
 app.use("/api/lists", require("./routes/lists"));
 app.use("/api/cards", require("./routes/cards"));
+app.use("/api/teams", require("./routes/teams"));
 
 app.get("/", (req, res) =>
   res.json({ message: "Trello Clone API is running!" }),
@@ -75,6 +76,16 @@ io.on("connection", (socket) => {
   });
   socket.on("listsReordered", (data) => {
     socket.to(`board:${data.boardId}`).emit("listsReordered", data);
+  });
+
+  // Team events
+  socket.on("joinTeamRoom", (teamId) => {
+    socket.join(`team:${teamId}`);
+    console.log(`Socket ${socket.id} joined team:${teamId}`);
+  });
+
+  socket.on("leaveTeamRoom", (teamId) => {
+    socket.leave(`team:${teamId}`);
   });
 
   socket.on("disconnect", () => {

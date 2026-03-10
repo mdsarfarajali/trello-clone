@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { useTeamPanel } from "../context/TeamPanelContext";
+import TeamPanel from "./TeamPanel";
 import API from "../api";
 import {
   LayoutGrid,
@@ -14,10 +16,12 @@ import {
   Globe,
   Briefcase,
   User as UserIcon,
+  Users,
 } from "lucide-react";
 
 export default function AppNavbar({ onCreateClick }) {
   const { user, logout } = useAuth();
+  const { togglePanel, showPanel } = useTeamPanel();
   const navigate = useNavigate();
   const [showProfile, setShowProfile] = useState(false);
   const [showCreateMenu, setShowCreateMenu] = useState(false);
@@ -58,6 +62,7 @@ export default function AppNavbar({ onCreateClick }) {
   }, [searchQuery]);
 
   return (
+    <>
     <nav
       style={{
         background: "rgba(30, 30, 36, 0.85)",
@@ -112,6 +117,15 @@ export default function AppNavbar({ onCreateClick }) {
         </div>
         Trello
       </Link>
+
+      {/* ── Teams Button ── */}
+      <button
+        className={`team-nav-btn ${showPanel ? 'team-nav-btn-active' : ''}`}
+        onClick={togglePanel}
+      >
+        <Users size={16} />
+        Teams
+      </button>
 
       {/* ── Center: Search ── */}
       <div
@@ -599,6 +613,8 @@ export default function AppNavbar({ onCreateClick }) {
         )}
       </div>
     </nav>
+    <TeamPanel />
+    </>
   );
 }
 
