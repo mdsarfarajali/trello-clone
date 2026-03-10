@@ -2,12 +2,14 @@ import React from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { AuthProvider, useAuth } from "./context/AuthContext";
-import { TeamPanelProvider } from "./context/TeamPanelContext";
 import LandingPage from "./pages/LandingPage";
 import { LoginPage, RegisterPage } from "./pages/AuthPages";
+import HomePage from "./pages/HomePage";
 import DashboardPage from "./pages/DashboardPage";
 import BoardPage from "./pages/BoardPage";
 import CalendarPage from "./pages/CalendarPage";
+import TeamListPage from "./pages/TeamListPage";
+import TeamWorkspacePage from "./pages/TeamWorkspacePage";
 import "./index.css";
 
 function PrivateRoute({ children }) {
@@ -45,60 +47,82 @@ function PrivateRoute({ children }) {
 function GuestRoute({ children }) {
   const { user, loading } = useAuth();
   if (loading) return null;
-  return user ? <Navigate to="/boards" replace /> : children;
+  return user ? <Navigate to="/home" replace /> : children;
 }
 
 export default function App() {
   return (
     <AuthProvider>
-      <TeamPanelProvider>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<LandingPage />} />
-            <Route
-              path="/login"
-              element={
-                <GuestRoute>
-                  <LoginPage />
-                </GuestRoute>
-              }
-            />
-            <Route
-              path="/register"
-              element={
-                <GuestRoute>
-                  <RegisterPage />
-                </GuestRoute>
-              }
-            />
-            <Route
-              path="/boards"
-              element={
-                <PrivateRoute>
-                  <DashboardPage />
-                </PrivateRoute>
-              }
-            />
-            <Route
-              path="/board/:id"
-              element={
-                <PrivateRoute>
-                  <BoardPage />
-                </PrivateRoute>
-              }
-            />
-            <Route
-              path="/calendar"
-              element={
-                <PrivateRoute>
-                  <CalendarPage />
-                </PrivateRoute>
-              }
-            />
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
-        </BrowserRouter>
-      </TeamPanelProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route
+            path="/login"
+            element={
+              <GuestRoute>
+                <LoginPage />
+              </GuestRoute>
+            }
+          />
+          <Route
+            path="/register"
+            element={
+              <GuestRoute>
+                <RegisterPage />
+              </GuestRoute>
+            }
+          />
+          <Route
+            path="/home"
+            element={
+              <PrivateRoute>
+                <HomePage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/boards"
+            element={
+              <PrivateRoute>
+                <DashboardPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/board/:id"
+            element={
+              <PrivateRoute>
+                <BoardPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/calendar"
+            element={
+              <PrivateRoute>
+                <CalendarPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/team"
+            element={
+              <PrivateRoute>
+                <TeamListPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/team/:id"
+            element={
+              <PrivateRoute>
+                <TeamWorkspacePage />
+              </PrivateRoute>
+            }
+          />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </BrowserRouter>
       <Toaster
         position="bottom-right"
         toastOptions={{ style: { fontSize: 14 } }}
